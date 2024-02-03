@@ -1,0 +1,14 @@
+{
+  "name": "typescript-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "loadsh": "^0.0.4",
+    "typescript": "^5.3.3"
+  }
+}
