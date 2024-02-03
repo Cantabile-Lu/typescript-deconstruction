@@ -70,6 +70,30 @@ class Linked<T> {
         this.size ++
         return true
     }
+
+    /**
+     * @description 删除方法, 根据位置移除对应的数据
+     * 1: 位置是否合理
+     *   合理: 移除节点并返回
+     *   不合理: 返回null
+     */
+    removeAt(position: number): T | null{
+        if(position < 0 || position >= this.size) return null;
+        let current =  this.head;
+        if(position === 0){
+            this.head  = current.next
+        }else{
+            let index = 0;
+            let pre : Node<T> | null = null;
+            while(index++ < position){
+                pre = current
+                current = current.next
+            }
+            pre.next = current.next
+        }
+        this.size -- ;
+        return current.value
+    }
     /**
      * @description 遍历链表
      */
@@ -89,9 +113,8 @@ lin.append('aaa');
 lin.append('bbb');
 lin.append('ccc');
 lin.insert("abc", 0)
-const result1 = lin.tranverse()
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,result1)
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,lin.tranverse())
 lin.insert("111", 1)
-const result = lin.tranverse()
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,result)
-export default Node
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.removeAt(0))
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`, lin.tranverse())
+export default {}
