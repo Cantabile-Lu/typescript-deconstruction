@@ -132,6 +132,22 @@ class Linked<T> {
     }
 
     /**
+     * @description 更具值返回索引
+     */
+    indexOf(value: T): number {
+        let current = this.head;
+        let index = 0;
+        while(current){
+            if(current.value === value){
+                return index
+            }
+            current = current.next
+            index ++
+        }
+        return -1
+    }
+
+    /**
      * @description 遍历链表
      */
     tranverse(){
@@ -154,6 +170,10 @@ console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,lin.tranverse())
 lin.insert("111", 1)
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.removeAt(0))
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`, lin.tranverse())
+
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 174`,lin.update('张三', 1))
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.indexOf('c2321cc'))
 export default {}
 
 
