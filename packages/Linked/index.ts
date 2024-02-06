@@ -1,5 +1,5 @@
 /**
- * @description 链表结构
+ * @description 链表结构  2.02
  */
 class Node<T>{
     value: T;
@@ -94,6 +94,11 @@ class Linked<T> {
         this.size -- ;
         return current.value
     }
+
+    /**
+     * @description 根据位置获取元素
+     */
+
     /**
      * @description 遍历链表
      */
