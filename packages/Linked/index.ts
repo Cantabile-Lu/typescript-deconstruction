@@ -123,6 +123,15 @@ class Linked<T> {
     }
 
     /**
+     * @description 更新
+     */
+    update(value: T, position: number){
+        if(position < 0 || position >= this.size) return false
+        this.getNode(position).value = value
+        return true
+    }
+
+    /**
      * @description 遍历链表
      */
     tranverse(){
@@ -146,3 +155,5 @@ lin.insert("111", 1)
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.removeAt(0))
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`, lin.tranverse())
 export default {}
+
+
