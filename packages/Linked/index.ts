@@ -19,6 +19,18 @@ class Linked<T> {
     get length(): number {
         return this.size
     }
+
+    /**
+     * @description 根据position 获取到节点
+     */
+    private getNode(position: number): Node<T> | null {
+        let index = 0;
+        let current = this.head
+        while(index++ < position){
+            current = current.next
+        }
+        return current
+    }
     /**
      * @description 添加节点
      * 1: 链表是否为空
@@ -55,17 +67,21 @@ class Linked<T> {
             // 更改头部节点
             this.head = node;
         }else{
-            let index = 0;
-            // 保存当前头部节点
-            let current = this.head;
-            // 保存上一个节点
-            let pre: Node<T> | null = null;
-            while(index ++ < position){
-                pre = current
-                current = current.next
-            }
-            node.next = current
-            pre.next = node;
+            // let index = 0;
+            // // 保存当前头部节点
+            // let current = this.head;
+            // // 保存上一个节点
+            // let pre: Node<T> | null = null;
+            // while(index ++ < position){
+            //     pre = current
+            //     current = current.next
+            // }
+            // node.next = current
+            // pre.next = node;
+
+            let pre = this.getNode(position - 1)
+            node.next = pre.next
+            pre.next = node
         }
         this.size ++
         return true
@@ -83,13 +99,15 @@ class Linked<T> {
         if(position === 0){
             this.head  = current.next
         }else{
-            let index = 0;
-            let pre : Node<T> | null = null;
-            while(index++ < position){
-                pre = current
-                current = current.next
-            }
-            pre.next = current.next
+            // let index = 0;
+            // let pre : Node<T> | null = null;
+            // while(index++ < position){
+            //     pre = current
+            //     current = current.next
+            // }
+            let pre = this.getNode(position - 1)
+
+            pre.next = pre.next.next
         }
         this.size -- ;
         return current.value
@@ -98,6 +116,11 @@ class Linked<T> {
     /**
      * @description 根据位置获取元素
      */
+    get(position: number): T | null {
+        if(position < 0 || position >= this.size)return null
+        // index === position
+        return this.getNode(position).value
+    }
 
     /**
      * @description 遍历链表
@@ -117,7 +140,7 @@ const lin = new Linked<string>()
 lin.append('aaa');
 lin.append('bbb');
 lin.append('ccc');
-lin.insert("abc", 0)
+lin.insert("abc", 3)
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,lin.tranverse())
 lin.insert("111", 1)
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.removeAt(0))
