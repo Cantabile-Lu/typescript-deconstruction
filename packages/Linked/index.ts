@@ -1,3 +1,5 @@
+import {LinedType} from "./type";
+
 /**
  * @description 链表结构  2.02
  */
@@ -12,7 +14,7 @@ class Node<T>{
 /**
  * @description linked 链表的实现
  */
-class Linked<T> {
+class Linked<T> implements LinedType<T> {
     private head: Node<T> | null = null;
     private size: number = 0;
     // 获取长度
@@ -54,9 +56,11 @@ class Linked<T> {
      * @description 插入节点
      * 1: 插入位置是否合理
      *   合理: 插入节点
+     *   8
      *   不合理: 返回false
      * 2: 插入位置
      */
+
     insert(value: T, position: number){
         if(position < 0 || position > this.size) return false;
 
@@ -148,6 +152,20 @@ class Linked<T> {
     }
 
     /**
+     * @description 根据元素删除
+     */
+    remove(value: T): T | null {
+        const index = this.indexOf(value)
+        return this.removeAt(index)
+    }
+
+    /**
+     * @description 是否为空
+     */
+    isEmpty(){
+        return this.size === 0
+    }
+    /**
      * @description 遍历链表
      */
     tranverse(){
@@ -160,20 +178,38 @@ class Linked<T> {
         return values
     }
 
+    /**
+     * @description 非递归反转链表
+     */
+   reverse() {
+        let current = this.head;
+        let pre: Node<T> | null = null;
+        while (current) {
+            let next = current.next;
+            current.next = pre;
+            pre = current;
+            current = next;
+        }
+        this.head = pre
+    }
 }
 const lin = new Linked<string>()
 lin.append('aaa');
 lin.append('bbb');
 lin.append('ccc');
-lin.insert("abc", 3)
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,lin.tranverse())
-lin.insert("111", 1)
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.removeAt(0))
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`, lin.tranverse())
-
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 174`,lin.update('张三', 1))
+// lin.insert("abc", 3)
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,lin.tranverse())
+// lin.insert("111", 1)
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.removeAt(0))
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`, lin.tranverse())
+//
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 174`,lin.update('张三', 1))
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 174`,lin.remove('abc'))
+//
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.indexOf('c2321cc'))
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.reverse())
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.indexOf('c2321cc'))
 export default {}
 
 

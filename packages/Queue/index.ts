@@ -20,5 +20,7 @@ class Queue<T> implements  QueueType<T> {
     get size(){
         return this.data.length
     }
+
+
 }
 export default Queue
