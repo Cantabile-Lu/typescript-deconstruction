@@ -6,7 +6,7 @@ import {hashFunction} from "./hashFunction";
 
 class HashTable<T> {
     // 创建数组, 用来存放链地址法中的链 / 数组
-    private storage: [string, T][][]  = []
+     storage: [string, T][][]  = []
     // 定义数组的长度
     private length = 7;
     // 记录数组已经存放的元素个数
@@ -20,6 +20,26 @@ class HashTable<T> {
             hashCode = max * hashCode + key.charCodeAt(i)
         }
         return hashCode % max
+    }
+
+    /**
+     * @description 重新设置尺寸
+     * 在put增加数据的时候, 比例大于0.75 则resize
+     */
+    private resize(length: number){
+        this.length = length
+        // 数据初始化
+        const old = this.storage
+        this.storage = [];
+        this.count = 0;
+        // 获取原来所有的数据, 并且放入新的数组中
+        old.forEach(bucket => {
+            if(!bucket)return;
+            for (let i = 0; i <bucket.length; i++) {
+                const tuple = bucket[i]
+                this.put(tuple[0], tuple[1])
+            }
+        })
     }
     /**
      * @description  根据key 查询数据, 如果有数据则是插入操作 ,反之就是修改操作
@@ -51,6 +71,11 @@ class HashTable<T> {
         if(!isUpdate){
            bucket.push([key, value])
             this.count ++
+
+            if(this.count / this.length > 0.75){
+                console.log(`🚀🚀🚀🚀🚀-> in index.ts on 76`,)
+                this.resize(this.length * 2)
+            }
         }
     }
 
@@ -74,14 +99,52 @@ class HashTable<T> {
         }
         return undefined
     }
+
+    /**
+     * @description 删除
+     * 根据对应的key 删除对应的key / value
+     */
+    delete(key: string): T | undefined {
+        const index = this.getIndex(key, this.length)
+        const bucket = this.storage[index]
+        if(!bucket) return undefined;
+
+        for (let i = 0; i < bucket.length; i++) {
+            const tuple = bucket[i]
+            const tupleKey = tuple[0]
+            if(tupleKey === key){
+                bucket.splice(i, 1)
+                this.count --
+                // 如果loadFactor小于0.25并且小于最小长度 则缩容
+                if(this.count / this.length < 0.25 && this.length > 7){
+                    this.resize(Math.floor(this.length / 2))
+                }
+
+                return tuple[1]
+            }
+        }
+        return undefined
+    }
 }
 
 
 const hashTable = new HashTable()
-hashTable.put('aaa', 100)
-hashTable.put('aaa', 200)
-hashTable.put('aba', 300)
-const result = hashTable.get('abc')
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 86`,result)
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 45`,hashTable)
+function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+const data = Array(10).fill(0).map((_, index) => 'ab' + getRandomInt(1, 1000)  )
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 103`,data)
+data.forEach(str=> {
+    hashTable.put(str, Math.random() * data.length)
+})
+// hashTable.put('aaa', 200)
+// hashTable.put('aba', 300)
+// hashTable.put('abc', 300)
+// const result = hashTable.get('abc')
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 86`,result)
+// const result1 = hashTable.delete('aba')
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 108`,result1)
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 45`,hashTable.storage)
 export default HashTable
