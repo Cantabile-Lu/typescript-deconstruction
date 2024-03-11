@@ -19,7 +19,6 @@ class HashTable<T> {
             // 霍乱法则计算
             hashCode = max * hashCode + key.charCodeAt(i)
         }
-        console.log(`🚀🚀🚀🚀🚀-> in index.ts on 22`,hashCode)
         return hashCode % max
     }
     /**
@@ -54,6 +53,27 @@ class HashTable<T> {
             this.count ++
         }
     }
+
+    /**
+     * @description 获取值
+     */
+    get(key: string): T | undefined {
+        // 1: 根据key获取索引值index
+        const index = this.getIndex(key, this.length)
+        // 2: 获取桶数据
+        const bucket = this.storage[index]
+        if(!bucket) return undefined;
+
+        // 3: 遍历
+        for (let i = 0; i < bucket.length; i++) {
+            const tuple = bucket[i]
+            const tupleKey = tuple[0]
+            if(tupleKey === key){
+                return tuple[1]
+            }
+        }
+        return undefined
+    }
 }
 
 
@@ -61,5 +81,7 @@ const hashTable = new HashTable()
 hashTable.put('aaa', 100)
 hashTable.put('aaa', 200)
 hashTable.put('aba', 300)
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 45`,hashTable)
+const result = hashTable.get('abc')
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 86`,result)
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 45`,hashTable)
 export default HashTable
