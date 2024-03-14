@@ -2,8 +2,19 @@
  * @description hash 表
  * @date: 2024-03-08 to 02:06
  */
-import {hashFunction} from "./hashFunction";
 
+/**
+ * @description 是否是质数
+ * 只能被1和num整除
+ */
+function isPrime(num: number): boolean{
+    for (let i = 2; i < num; i++) {
+        if(num % i === 0){
+            return false
+        }
+    }
+    return true
+}
 class HashTable<T> {
     // 创建数组, 用来存放链地址法中的链 / 数组
      storage: [string, T][][]  = []
