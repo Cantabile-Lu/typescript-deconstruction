@@ -2,19 +2,8 @@
  * @description hash 表
  * @date: 2024-03-08 to 02:06
  */
+import {isPrime} from 'shared'
 
-/**
- * @description 是否是质数
- * 只能被1和num整除
- */
-function isPrime(num: number): boolean{
-    for (let i = 2; i < num; i++) {
-        if(num % i === 0){
-            return false
-        }
-    }
-    return true
-}
 class HashTable<T> {
     // 创建数组, 用来存放链地址法中的链 / 数组
      storage: [string, T][][]  = []
@@ -34,11 +23,21 @@ class HashTable<T> {
     }
 
     /**
+     * @description 获取下一个质数
+     */
+    private getNextPrime(num: number): number {
+        while(!isPrime(num)){
+            num++
+        }
+        return num
+    }
+    /**
      * @description 重新设置尺寸
      * 在put增加数据的时候, 比例大于0.75 则resize
      */
     private resize(length: number){
-        this.length = length
+        this.length = this.getNextPrime(length)
+        console.log(`🚀🚀🚀🚀🚀-> in index.ts on 44`,this.length)
         // 数据初始化
         const old = this.storage
         this.storage = [];
@@ -145,7 +144,7 @@ function getRandomInt(min: number, max: number) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-const data = Array(10).fill(0).map((_, index) => 'ab' + getRandomInt(1, 1000)  )
+const data = Array(6).fill(0).map((_, index) => 'ab' + getRandomInt(1, 1000)  )
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 103`,data)
 data.forEach(str=> {
     hashTable.put(str, Math.random() * data.length)

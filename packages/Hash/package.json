@@ -1,0 +1,12 @@
+{
+  "name": "Hash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "shared":  "workspace:*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
