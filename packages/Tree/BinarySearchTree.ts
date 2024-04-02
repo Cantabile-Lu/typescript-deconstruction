@@ -1,3 +1,5 @@
+import {btPrint} from "hy-algokit";
+
 class TreeNode<T> {
     value: T;
     left: TreeNode<T> | null = null;
@@ -8,7 +10,12 @@ class TreeNode<T> {
 }
 
 class BinarySearchTree<T> {
-     root: TreeNode<T> | null = null
+    private root: TreeNode<T> | null = null
+
+    print(){
+      btPrint(this.root)
+    }
+
     /**
      * @description 插入
      */
@@ -21,7 +28,6 @@ class BinarySearchTree<T> {
             // 有根节点
             this.insertNode(this.root, node);
         }
-
     }
     insertNode(root: TreeNode<T>, node: TreeNode<T>){
         if(node.value < root.value){
@@ -51,18 +57,85 @@ class BinarySearchTree<T> {
      */
 
     /**
-     * @description 遍历 - 中序 | 先序 | 后序 |
+     * @description 遍历 - 中序 | 先序遍历 | 后序 | 层序
      */
+    // 先序
+    preorderTraversal(){
+        this.preorderTraverseNode(this.root);
+    }
 
+    private preorderTraverseNode(node: TreeNode<T> | null){
+        if(node){
+            console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 69`,node.value)
+            this.preorderTraverseNode(node.left)
+            this.preorderTraverseNode(node.right)
+        }
+    }
+
+    inorderTraversal(){
+        this.inorderTraverseNode(this.root);
+    }
+    private  inorderTraverseNode(node: TreeNode<T> | null){
+        if(node){
+            this.inorderTraverseNode(node.left)
+            console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 81`,node.value)
+            this.inorderTraverseNode(node.right)
+        }
+    }
+
+    postorderTraversal(){
+        this.postorderTraverseNode(this.root);
+    }
+
+    private postorderTraverseNode(node: TreeNode<T> | null){
+        if(node){
+            this.postorderTraverseNode(node.right)
+            this.postorderTraverseNode(node.left)
+            console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 69`,node.value)
+        }
+    }
+
+    sequenceTraversal(){
+        const queue: TreeNode<T>[] = []
+        if(this.root){
+            queue.push(this.root)
+        }
+        while (queue.length){
+            const node = queue.shift()
+            console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 69`,node.value)
+            if(node.left){
+                queue.push(node.left)
+            }
+            if(node.right){
+                queue.push(node.right)
+            }
+        }
+    }
     /**
      * @description 删除
      */
 }
 
 const bst = new BinarySearchTree<number>();
-bst.insert(10);
+bst.insert(11);
+bst.insert(7);
+bst.insert(5);
+bst.insert(3);
+bst.insert(6);
 bst.insert(9);
+bst.insert(8);
+bst.insert(10);
+bst.insert(15);
+bst.insert(13);
+bst.insert(12);
+bst.insert(14);
 bst.insert(20);
-bst.insert(30);
-console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 66`,bst.root)
+bst.insert(18);
+bst.insert(25);
+
+bst.print()
+// bst.preorderTraversal()
+// bst.inorderTraversal()
+// bst.postorderTraversal()
+bst.sequenceTraversal()
 export default  BinarySearchTree;

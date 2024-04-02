@@ -14,6 +14,10 @@ importers:
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
+    devDependencies:
+      hy-algokit:
+        specifier: ^1.4.0
+        version: 1.4.0
 
   packages/Hash:
     dependencies:
@@ -26,6 +30,10 @@ importers:
   packages/shared: {}
 
 packages:
+
+  /hy-algokit@1.4.0:
+    resolution: {integrity: sha512-Eehnx7YS7VUzZsuntin9B2kolfIWYtPOsh922ZQ/ZUZxP1nUIWqIw2sna5lXpU5SzkOugeNdIDGN1sRnv3yeIw==}
+    dev: true
 
   /loadsh@0.0.4:
     resolution: {integrity: sha512-U+wLL8InpfRalWrr+0SuhWgGt10M4OyAk6G8xCYo2rwpiHtxZkWiFpjei0vO463ghW8LPCdhqQxXlMy2qicAEw==}
