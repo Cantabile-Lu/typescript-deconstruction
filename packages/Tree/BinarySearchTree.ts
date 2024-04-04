@@ -47,15 +47,40 @@ class BinarySearchTree<T> {
     /**
      * @description 查找
      */
-
+    isExist(value:T): boolean{
+        let current = this.root
+        while(current){
+            if(current.value === value ) return  true
+            if(current.value > value){
+                current = current.left
+            }else{
+                current = current.right
+            }
+        }
+        return false
+    }
     /**
      * @description 查找最大值
      */
-
+    getMax():T | null{
+        let current = this.root;
+        if(!current) return null
+        while (current.right){
+            current = current.right;
+        }
+        return current.value;
+    }
     /**
      * @description 查找最小值
      */
-
+    getMin():T | null{
+        let current = this.root;
+        if(!current) return null
+        while (current.left){
+            current = current.left;
+        }
+        return current.value;
+    }
     /**
      * @description 遍历 - 中序 | 先序遍历 | 后序 | 层序
      */
@@ -114,6 +139,7 @@ class BinarySearchTree<T> {
     /**
      * @description 删除
      */
+
 }
 
 const bst = new BinarySearchTree<number>();
@@ -134,8 +160,11 @@ bst.insert(18);
 bst.insert(25);
 
 bst.print()
+// console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 140`,bst.getMin())
+// console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 163`,bst.getMax())
+// console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 164`,bst.isExist(25))
 // bst.preorderTraversal()
 // bst.inorderTraversal()
 // bst.postorderTraversal()
-bst.sequenceTraversal()
+// bst.sequenceTraversal()
 export default  BinarySearchTree;
