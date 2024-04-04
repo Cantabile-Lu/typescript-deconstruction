@@ -4,6 +4,7 @@ class TreeNode<T> {
     value: T;
     left: TreeNode<T> | null = null;
     right: TreeNode<T> | null = null;
+    parent: TreeNode<T> | null = null;
     constructor(value: T) {
         this.value = value;
     }
@@ -47,17 +48,25 @@ class BinarySearchTree<T> {
     /**
      * @description 查找
      */
-    isExist(value:T): boolean{
-        let current = this.root
+    private indexOf(value: T):TreeNode<T> | null{
+        let current = this.root;
+        let parent: TreeNode<T> | null = null
         while(current){
-            if(current.value === value ) return  true
-            if(current.value > value){
-                current = current.left
-            }else{
-                current = current.right
+            if(current.value === value){
+                return current;
             }
+            parent = current;
+            if(current.value > value){
+                current = current.left;
+            }else{
+                current = current.right;
+            }
+            if(current) current.parent = parent;
         }
-        return false
+        return null
+    }
+    isExist(value:T): boolean{
+        return !!this.indexOf(value)
     }
     /**
      * @description 查找最大值
@@ -127,7 +136,7 @@ class BinarySearchTree<T> {
         }
         while (queue.length){
             const node = queue.shift()
-            console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 69`,node.value)
+            if(!node) return
             if(node.left){
                 queue.push(node.left)
             }
@@ -139,6 +148,15 @@ class BinarySearchTree<T> {
     /**
      * @description 删除
      */
+    remove(value: T){
+        //1. 搜索当前是否有这个节点
+        let current = this.indexOf(value);
+        let parent: TreeNode<T> | null = null;
+        if(!current) return false
+        console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 142`, current?.parent?.value)
+
+        return false
+    }
 
 }
 
@@ -158,6 +176,7 @@ bst.insert(14);
 bst.insert(20);
 bst.insert(18);
 bst.insert(25);
+bst.remove(20);
 
 bst.print()
 // console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 140`,bst.getMin())

@@ -29,7 +29,9 @@ class Linked<T> implements LinedType<T> {
         let index = 0;
         let current = this.head
         while(index++ < position){
-            current = current.next
+            if(current !== null){
+                current = current.next
+            }
         }
         return current
     }
@@ -84,8 +86,10 @@ class Linked<T> implements LinedType<T> {
             // pre.next = node;
 
             let pre = this.getNode(position - 1)
-            node.next = pre.next
-            pre.next = node
+            if(pre){
+                node.next = pre.next
+                pre.next = node
+            }
         }
         this.size ++
         return true
@@ -101,7 +105,9 @@ class Linked<T> implements LinedType<T> {
         if(position < 0 || position >= this.size) return null;
         let current =  this.head;
         if(position === 0){
-            this.head  = current.next
+            if(current){
+             this.head  = current.next
+            }
         }else{
             // let index = 0;
             // let pre : Node<T> | null = null;
@@ -110,11 +116,13 @@ class Linked<T> implements LinedType<T> {
             //     current = current.next
             // }
             let pre = this.getNode(position - 1)
-
-            pre.next = pre.next.next
+            if(pre && pre.next){
+                pre.next = pre.next.next
+            }
         }
         this.size -- ;
-        return current.value
+
+        return current && current.value
     }
 
     /**
@@ -123,7 +131,7 @@ class Linked<T> implements LinedType<T> {
     get(position: number): T | null {
         if(position < 0 || position >= this.size)return null
         // index === position
-        return this.getNode(position).value
+        return this.getNode(position)?.value || null
     }
 
     /**
@@ -131,7 +139,10 @@ class Linked<T> implements LinedType<T> {
      */
     update(value: T, position: number){
         if(position < 0 || position >= this.size) return false
-        this.getNode(position).value = value
+        const node = this.getNode(position)
+        if(node){
+            node.value = value
+        }
         return true
     }
 
