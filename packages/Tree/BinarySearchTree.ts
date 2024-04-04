@@ -4,9 +4,24 @@ class TreeNode<T> {
     value: T;
     left: TreeNode<T> | null = null;
     right: TreeNode<T> | null = null;
+    // 父节点
     parent: TreeNode<T> | null = null;
     constructor(value: T) {
         this.value = value;
+    }
+
+    /**
+     * @description 是否是左节点
+     */
+    get isLeft():boolean{
+        return !!(this.parent && this.parent.left === this);
+    }
+
+    /**
+     * @description 是否是右节点
+     */
+    get isRight():boolean{
+        return !!(this.parent && this.parent.right === this);
     }
 }
 
@@ -146,14 +161,71 @@ class BinarySearchTree<T> {
         }
     }
     /**
-     * @description 删除
+     * @description 删除后继
      */
+    private getSuccessorNode(node: TreeNode<T>): TreeNode<T>{
+        // 1.获取右子树
+        let current = node.right;
+        let successor:TreeNode<T> | null = null;
+
+        while(current){
+            successor = current;
+            current = current.left
+            if(current){
+                current.parent = successor;
+            }
+        }
+
+        if(successor !== node.right){
+            successor!.parent!.left = successor!.right;
+            successor!.right = node.right;
+        }
+
+        successor!.left = node.left;
+        return successor!
+    }
     remove(value: T){
         //1. 搜索当前是否有这个节点
         let current = this.indexOf(value);
-        let parent: TreeNode<T> | null = null;
         if(!current) return false
-        console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 142`, current?.parent?.value)
+        // 2. 如果是叶子节点
+        if (current.left === null && current.right === null) {
+            if (current === this.root) { // 根节点
+                this.root = null
+            } else if (current.isLeft) { // 父节点的左子节点
+                current.parent!.left = null
+            } else {
+                current.parent!.right = null
+            }
+        } else if(current.right === null){
+            // 3.只有一个子节点, 只有左子节点
+            if(current === this.root){
+                this.root = current.left
+            }else if(current.isLeft){
+                current.parent!.left = current.left
+            }else{
+                current.parent!.right = current.left
+            }
+        }else if(current.left === null){
+            // 4. 只有一个节点, 只有右节点
+            if(current === this.root){
+                this.root = current.right
+            }else if(current.isRight){
+                current.parent!.right = current.right
+            }else{
+                current.parent!.left = current.right
+            }
+        }else{
+            // 5. 有两个子节点
+            const successor = this.getSuccessorNode(current)
+            if(current === this.root){
+                this.root = successor
+            }else if(current.isLeft){
+                current.parent!.left = successor
+            }else{
+                current.parent!.right = successor
+            }
+        }
 
         return false
     }
@@ -175,8 +247,15 @@ bst.insert(12);
 bst.insert(14);
 bst.insert(20);
 bst.insert(18);
+bst.insert(19);
 bst.insert(25);
-bst.remove(20);
+bst.print()
+// bst.remove(3);
+// bst.remove(8);
+// bst.remove(15);
+// bst.remove(11);
+bst.remove(9);
+
 
 bst.print()
 // console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 140`,bst.getMin())
