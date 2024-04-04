@@ -187,44 +187,28 @@ class BinarySearchTree<T> {
     remove(value: T){
         //1. 搜索当前是否有这个节点
         let current = this.indexOf(value);
-        if(!current) return false
+        if(!current) return false;
+        let replaceNode: TreeNode<T> | null = null;
         // 2. 如果是叶子节点
         if (current.left === null && current.right === null) {
-            if (current === this.root) { // 根节点
-                this.root = null
-            } else if (current.isLeft) { // 父节点的左子节点
-                current.parent!.left = null
-            } else {
-                current.parent!.right = null
-            }
+          replaceNode = null
         } else if(current.right === null){
             // 3.只有一个子节点, 只有左子节点
-            if(current === this.root){
-                this.root = current.left
-            }else if(current.isLeft){
-                current.parent!.left = current.left
-            }else{
-                current.parent!.right = current.left
-            }
+            replaceNode = current.left
         }else if(current.left === null){
             // 4. 只有一个节点, 只有右节点
-            if(current === this.root){
-                this.root = current.right
-            }else if(current.isRight){
-                current.parent!.right = current.right
-            }else{
-                current.parent!.left = current.right
-            }
+            replaceNode = current.right
         }else{
             // 5. 有两个子节点
-            const successor = this.getSuccessorNode(current)
-            if(current === this.root){
-                this.root = successor
-            }else if(current.isLeft){
-                current.parent!.left = successor
-            }else{
-                current.parent!.right = successor
-            }
+            replaceNode = this.getSuccessorNode(current)
+        }
+
+        if(current === this.root){
+            this.root = replaceNode;
+        }else if(current.isLeft){
+            current.parent!.left = replaceNode;
+        }else{
+            current.parent!.right = replaceNode;
         }
 
         return false
@@ -254,7 +238,7 @@ bst.print()
 // bst.remove(8);
 // bst.remove(15);
 // bst.remove(11);
-bst.remove(9);
+bst.remove(15);
 
 
 bst.print()
