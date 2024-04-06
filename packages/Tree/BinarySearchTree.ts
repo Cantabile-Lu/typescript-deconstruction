@@ -1,4 +1,4 @@
-import {btPrint} from "hy-algokit";
+import {btPrint, PrintableNode} from "hy-algokit";
 
 class TreeNode<T> {
     value: T;
@@ -63,7 +63,7 @@ class BinarySearchTree<T> {
     /**
      * @description 查找
      */
-    private indexOf(value: T):TreeNode<T> | null{
+    indexOf(value: T):TreeNode<T> | null{
         let current = this.root;
         let parent: TreeNode<T> | null = null
         while(current){
@@ -216,32 +216,32 @@ class BinarySearchTree<T> {
 
 }
 
-const bst = new BinarySearchTree<number>();
-bst.insert(11);
-bst.insert(7);
-bst.insert(5);
-bst.insert(3);
-bst.insert(6);
-bst.insert(9);
-bst.insert(8);
-bst.insert(10);
-bst.insert(15);
-bst.insert(13);
-bst.insert(12);
-bst.insert(14);
-bst.insert(20);
-bst.insert(18);
-bst.insert(19);
-bst.insert(25);
-bst.print()
-// bst.remove(3);
-// bst.remove(8);
+// const bst = new BinarySearchTree<number>();
+// bst.insert(11);
+// bst.insert(7);
+// bst.insert(5);
+// bst.insert(3);
+// bst.insert(6);
+// bst.insert(9);
+// bst.insert(8);
+// bst.insert(10);
+// bst.insert(15);
+// bst.insert(13);
+// bst.insert(12);
+// bst.insert(14);
+// bst.insert(20);
+// bst.insert(18);
+// bst.insert(19);
+// bst.insert(25);
+// bst.print()
+// // bst.remove(3);
+// // bst.remove(8);
+// // bst.remove(15);
+// // bst.remove(11);
 // bst.remove(15);
-// bst.remove(11);
-bst.remove(15);
-
-
-bst.print()
+//
+//
+// bst.print()
 // console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 140`,bst.getMin())
 // console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 163`,bst.getMax())
 // console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 164`,bst.isExist(25))
@@ -249,4 +249,30 @@ bst.print()
 // bst.inorderTraversal()
 // bst.postorderTraversal()
 // bst.sequenceTraversal()
+
+interface User {
+    name: string;
+    age: number;
+}
+class Person {
+    constructor(public name: string, public age: number){}
+    valueOf(){
+        return this.age
+    }
+}
+const p1 = new Person('张三', 20);
+const p2 = new Person('李四', 18);
+const p3 = new Person('王五', 25);
+const p4 = new Person('王五', 26);
+
+console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 272`,p3 ===  p4)
+
+const bst = new BinarySearchTree<Person>();
+bst.insert(p1);
+bst.insert(p2);
+bst.insert(p3);
+bst.insert(p4);
+bst.print()
+const result = bst.indexOf(p1)
+console.log(`🚀🚀🚀🚀🚀-> in BinarySearchTree.ts on 277`,result?.value)
 export default  BinarySearchTree;

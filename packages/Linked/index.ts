@@ -116,13 +116,14 @@ class Linked<T> implements LinedType<T> {
             //     current = current.next
             // }
             let pre = this.getNode(position - 1)
+            // 从新赋值
+            current = pre!.next
             if(pre && pre.next){
                 pre.next = pre.next.next
             }
         }
         this.size -- ;
-
-        return current && current.value
+        return  current?.value ?? null
     }
 
     /**
