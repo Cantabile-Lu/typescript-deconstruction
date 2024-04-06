@@ -15,13 +15,15 @@ class Node<T>{
  * @description linked 链表的实现
  */
 class Linked<T> implements LinedType<T> {
+    // 链表的头部节点
     protected head: Node<T> | null = null;
-    private size: number = 0;
+    // 链表的尾部节点
+    protected tail: Node<T> | null = null;
+    protected size: number = 0;
     // 获取长度
     get length(): number {
         return this.size
     }
-
     /**
      * @description 根据position 获取到节点
      */
@@ -43,15 +45,12 @@ class Linked<T> implements LinedType<T> {
     append(value: T){
         const node = new Node(value);
         if(!this.head) {
-            this.head = node
+            this.head = node;
         }else{
-            let current = this.head;
-            while(current.next){
-                current = current.next
-            }
-            current.next = node
+            this.tail!.next = node
         }
-        this.size ++
+        this.tail = node;
+        this.size ++;
     }
 
     /**
