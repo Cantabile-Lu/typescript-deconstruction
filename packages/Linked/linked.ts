@@ -192,11 +192,19 @@ class Linked<T> implements LinedType<T> {
         }
         this.head = pre
     }
+
+    /**
+     * @description 是否是最后一个节点
+     */
+    private isTail(node: Node<T>){
+        return  node === this.tail
+    }
 }
 const lin = new Linked<string>()
 lin.append('aaa');
 lin.append('bbb');
 lin.append('ccc');
+lin.insert('fff',3);
 // lin.insert("abc", 3)
 // console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,lin.tranverse())
 // lin.insert("111", 1)
@@ -208,8 +216,8 @@ lin.append('ccc');
 //
 // console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
 // console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.indexOf('c2321cc'))
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.reverse())
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.reverse())
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
 export default Linked
 
 
