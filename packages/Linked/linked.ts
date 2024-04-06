@@ -72,22 +72,12 @@ class Linked<T> implements LinedType<T> {
             // 更改头部节点
             this.head = node;
         }else{
-            // let index = 0;
-            // // 保存当前头部节点
-            // let current = this.head;
-            // // 保存上一个节点
-            // let pre: Node<T> | null = null;
-            // while(index ++ < position){
-            //     pre = current
-            //     current = current.next
-            // }
-            // node.next = current
-            // pre.next = node;
-
             let pre = this.getNode(position - 1)
-            if(pre){
-                node.next = pre.next
-                pre.next = node
+            node.next = pre!.next
+            pre!.next = node
+            // 插入的节点是最后一个节点
+            if(position === this.length){
+                this.tail = node
             }
         }
         this.size ++
