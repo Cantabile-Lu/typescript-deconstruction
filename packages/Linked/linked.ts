@@ -94,21 +94,20 @@ class Linked<T> implements LinedType<T> {
         if(position < 0 || position >= this.size) return null;
         let current =  this.head;
         if(position === 0){
-            if(current){
-                this.head  = current.next
+            this.head  = current?.next ?? null;
+            // 如果只有一个节点, 后尾部节点置为null
+            if(this.length === 1){
+                this.tail = null
             }
         }else{
-            // let index = 0;
-            // let pre : Node<T> | null = null;
-            // while(index++ < position){
-            //     pre = current
-            //     current = current.next
-            // }
-            let pre = this.getNode(position - 1)
+            let prev = this.getNode(position - 1)
             // 从新赋值
-            current = pre!.next
-            if(pre && pre.next){
-                pre.next = pre.next.next
+            current = prev!.next
+            prev!.next = prev?.next?.next ?? null
+
+            // 如果删除最后一个节点, tail 指向上一个节点
+            if(position === this.length - 1){
+                this.tail = prev
             }
         }
         this.size -- ;
