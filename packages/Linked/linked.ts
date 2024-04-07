@@ -168,13 +168,21 @@ class Linked<T> implements LinedType<T> {
     /**
      * @description 遍历链表
      */
-    tranverse(){
+    traversal(){
         let current = this.head
         const values: T[]= []
         while(current){
             values.push(current.value)
-            current = current.next
+            if(this.isTail(current)){
+                current = null
+            }else{
+                current = current.next
+            }
         }
+        if(this.tail !== null && this.head){
+            values.push(this.head.value)
+        }
+        console.log(`🚀🚀🚀🚀🚀-> in linked.ts on 182`,values)
         return values
     }
 
@@ -200,24 +208,6 @@ class Linked<T> implements LinedType<T> {
         return  node === this.tail
     }
 }
-const lin = new Linked<string>()
-lin.append('aaa');
-lin.append('bbb');
-lin.append('ccc');
-lin.insert('fff',3);
-// lin.insert("abc", 3)
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`,lin.tranverse())
-// lin.insert("111", 1)
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.removeAt(0))
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 80`, lin.tranverse())
-//
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 174`,lin.update('张三', 1))
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 174`,lin.remove('abc'))
-//
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.indexOf('c2321cc'))
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 176`,lin.reverse())
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 115`,lin.tranverse())
 export default Linked
 
 

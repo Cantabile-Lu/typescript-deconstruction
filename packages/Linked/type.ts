@@ -7,6 +7,6 @@ export interface LinedType<T> {
     indexOf(value: T): number
     remove(value: T): T | null
     isEmpty(): boolean
-    tranverse(): void
+    traversal(): void
     get length(): number
 }
