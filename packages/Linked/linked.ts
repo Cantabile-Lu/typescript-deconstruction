@@ -145,7 +145,11 @@ class Linked<T> implements LinedType<T> {
             if(current.value === value){
                 return index
             }
-            current = current.next
+            if(this.isTail(current)){
+                current =  null
+            }else{
+                current = current.next
+            }
             index ++
         }
         return -1

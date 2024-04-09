@@ -44,12 +44,14 @@ class CircularLinked<T> extends Linked<T> {
  circular.append(p2)
  circular.append(p3)
  circular.traversal()
-// circular.insert(p4, 0)
+circular.insert(p4, 0)
 circular.insert(p5, 3)
 circular.traversal()
 
-circular.removeAt(0)
+// circular.removeAt(0)
 circular.traversal()
-circular.removeAt(2)
+// circular.removeAt(2)
 circular.traversal()
+
+console.log(`🚀🚀🚀🚀🚀-> in circularLinked.ts on 57`, circular.indexOf(p2))
  export default CircularLinked
