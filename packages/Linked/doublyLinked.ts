@@ -18,7 +18,6 @@ class doublyLinked<T> extends Linked<T>{
      */
     override append(value: T) {
         const node = new DoublyNode(value);
-        console.log(`🚀🚀🚀🚀🚀-> in doublyLinked.ts on 15`,node)
         if (!this.head) {
             this.head = node;
             this.tail = node;
@@ -59,6 +58,28 @@ class doublyLinked<T> extends Linked<T>{
         console.log(`🚀🚀🚀🚀🚀-> in doublyLinked.ts on 59`,values)
         return values
     }
+
+    /**
+     * @description 根据索引插入节点
+     */
+    override insert(value: T, position: number): boolean {
+        if(position < 0 && position > this.length) return false;
+        // 插入头部
+        if(position === 0){
+            this.append(value)
+        }else if(position === this.length){
+            // 插入尾部
+            this.prepend(value)
+        }else{
+            // 插入中间
+            const node = new DoublyNode(value);
+            const current = this.getNode(position);
+            console.log(`🚀🚀🚀🚀🚀-> in doublyLinked.ts on 78`,current?.value)
+
+        }
+
+        return false
+    }
 }
 const p1 = new doublyLinked<string>();
 p1.append("a");
@@ -67,6 +88,7 @@ p1.append("c");
 p1.append("d");
 p1.prepend("abc")
 p1.prepend("cba")
+p1.insert("cba", 2)
 p1.traversal()
 p1.postTraversal()
 

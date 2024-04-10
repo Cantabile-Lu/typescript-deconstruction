@@ -27,7 +27,7 @@ class Linked<T> implements LinedType<T> {
     /**
      * @description 根据position 获取到节点
      */
-    private getNode(position: number): Node<T> | null {
+     getNode(position: number): Node<T> | null {
         let index = 0;
         let current = this.head
         while(index++ < position){
