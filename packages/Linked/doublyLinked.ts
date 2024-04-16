@@ -66,16 +66,23 @@ class doublyLinked<T> extends Linked<T>{
         if(position < 0 && position > this.length) return false;
         // 插入头部
         if(position === 0){
-            this.append(value)
+            this.prepend(value)
         }else if(position === this.length){
             // 插入尾部
-            this.prepend(value)
+            this.append(value)
         }else{
             // 插入中间
             const node = new DoublyNode(value);
-            const current = this.getNode(position);
+            const current = this.getNode(position) as DoublyNode<T>;
             console.log(`🚀🚀🚀🚀🚀-> in doublyLinked.ts on 78`,current?.value)
 
+            // 当前节点的上一个节点的next 指向 新节点
+            current.prev!.next = node;
+
+            node.next = current;
+            node.prev = current.prev;
+            current.prev = node;
+            this.size ++
         }
 
         return false
@@ -92,4 +99,7 @@ p1.insert("cba", 2)
 p1.traversal()
 p1.postTraversal()
 
+p1.insert('add', 1)
+p1.insert('add0', 0)
+p1.traversal()
 export default {}
