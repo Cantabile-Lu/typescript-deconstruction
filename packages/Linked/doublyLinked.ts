@@ -1,5 +1,4 @@
 import Linked from "./linked";
-import {T} from "vitest/dist/reporters-P7C2ytIv";
 
 class DoublyNode<T>{
     value: T;
@@ -75,7 +74,6 @@ class doublyLinked<T> extends Linked<T>{
             const node = new DoublyNode(value);
             const current = this.getNode(position) as DoublyNode<T>;
             console.log(`🚀🚀🚀🚀🚀-> in doublyLinked.ts on 78`,current?.value)
-
             // 当前节点的上一个节点的next 指向 新节点
             current.prev!.next = node;
 
@@ -87,6 +85,38 @@ class doublyLinked<T> extends Linked<T>{
 
         return false
     }
+
+    /**
+     * @description 根据索引删除节点
+     */
+    override removeAt(position: number): T | null {
+        console.log(`🚀🚀🚀🚀🚀-> in doublyLinked.ts on 93`,this.length, this.size, position)
+        // 如果 小于 0 或者 大于length 则越界 返回null
+        if(position < 0 || position >= this.length) return  null;
+        let current = this.head;
+
+        if(position === 0){
+            if(this.length === 1){
+                this.head = null;
+                this.tail = null;
+            } else{
+                this.head = this.head!.next;
+                this.head!.prev = null;
+            }
+            // todo 为什么只能比较 this.length - 1 ? 而不是this.length?
+        } else if(position === this.length - 1){
+            current = this.tail;
+            this.tail = this.tail!.prev;
+            this.tail!.next = null;
+        }else{
+            current = this.getNode(position) as DoublyNode<T>;
+            current.prev!.next = current.next;
+            current.next!.prev = current.prev;
+        }
+        this.size -- ;
+
+        return current?.value ?? null;
+    }
 }
 const p1 = new doublyLinked<string>();
 p1.append("a");
@@ -96,10 +126,13 @@ p1.append("d");
 p1.prepend("abc")
 p1.prepend("cba")
 p1.insert("cba", 2)
-p1.traversal()
+// p1.traversal()
 p1.postTraversal()
 
 p1.insert('add', 1)
 p1.insert('add0', 0)
+p1.traversal()
+p1.removeAt(8)
+p1.removeAt(0)
 p1.traversal()
 export default {}
