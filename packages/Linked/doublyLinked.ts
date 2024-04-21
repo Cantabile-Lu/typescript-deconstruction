@@ -135,4 +135,4 @@ p1.traversal()
 p1.removeAt(8)
 p1.removeAt(0)
 p1.traversal()
-export default {}
+export default DoublyNode
