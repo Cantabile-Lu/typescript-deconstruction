@@ -3,10 +3,21 @@ import {HeapType} from "./type";
 
 class Heap<T> implements HeapType<T>{
     data: T[] = [];
+    protected isMaxHeap: boolean = true;
     protected length: number = 0;
 
-    constructor(arr: T[] = []){
-         this.buildHeap(arr);
+    constructor({data = [], isMaxHeap = true}: {data?: T[], isMaxHeap?: boolean} = {}){
+        this.isMaxHeap = isMaxHeap;
+        if(data.length){
+         this.buildHeap(data);
+        }
+    }
+    private compare(i: number, j: number): boolean{
+        if(this.isMaxHeap){
+            return this.data[i] >= this.data[j]
+        }else{
+            return this.data[i] <= this.data[j];
+        }
     }
     private  swap(i: number, j: number){
         // 1
@@ -37,13 +48,13 @@ class Heap<T> implements HeapType<T>{
     }
 
     /**
-     * @description 上滤操作
+     * @description 上滤操作 - 最大堆
      */
     private heapify_up(){
         let index = this.length - 1;
         while(index > 0){
             let parentIndex = Math.floor((index - 1) / 2);
-            if(this.data[index] <= this.data[parentIndex]){
+            if(this.compare(parentIndex, index)){
                 break;
             }
             // 交换
@@ -52,6 +63,10 @@ class Heap<T> implements HeapType<T>{
             index = parentIndex
         }
     }
+
+    /**
+     * @description 最小堆
+     */
     private heapify_down(start: number = 0){
         let index = start;
         while(2 * index + 1 <= this.length - 1){
@@ -59,11 +74,11 @@ class Heap<T> implements HeapType<T>{
             let rightChildrenIndex = 2 * index + 2; // 可能为空
             // 3: 获取节点中较大的值
             let largesIndex = leftChildrenIndex;
-            if(rightChildrenIndex < this.length && this.data[rightChildrenIndex] > this.data[leftChildrenIndex]){
+            if(rightChildrenIndex < this.length && this.compare(rightChildrenIndex, leftChildrenIndex)){
                 largesIndex = rightChildrenIndex;
             }
             // 4: 比较较大的值和index比较
-            if(this.data[index] >= this.data[largesIndex]){
+            if(this.compare(index, largesIndex)){
                 break;
             }
             //5: 交互位置
@@ -105,27 +120,25 @@ class Heap<T> implements HeapType<T>{
     buildHeap(arr: T[]){
         this.data = arr;
         this.length = arr.length;
-
         // 1: 从非叶子节点开始下滤操作
         const start = Math.floor((this.length - 1) / 2);
         for(let i = start; i >= 0; i--){
-            console.log(`🚀🚀🚀🚀🚀-> in index.ts on 109`,i)
             this.heapify_down(i);
         }
     }
 }
 
 const arr = [19,100,36,17,3,25,1,2,7]
-const heap = new Heap<number>(arr);
+const heap = new Heap<number>({isMaxHeap: false});
 
-// heap.buildHeap(arr)
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 119`,heap.data, arr)
+heap.buildHeap(arr)
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 119`,heap.data, arr)
 // arr.forEach(item => {
 //     heap.insert(item);
 // })
 //
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
-// heap.extract()
-// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
+heap.extract()
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
 
 export default {}
