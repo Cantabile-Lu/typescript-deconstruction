@@ -5,6 +5,9 @@ class Heap<T> implements HeapType<T>{
     data: T[] = [];
     protected length: number = 0;
 
+    constructor(arr: T[] = []){
+         this.buildHeap(arr);
+    }
     private  swap(i: number, j: number){
         // 1
         // [this.data[i], this.data[j]] = [this.data[j], this.data[i]]
@@ -36,7 +39,7 @@ class Heap<T> implements HeapType<T>{
     /**
      * @description 上滤操作
      */
-    heapify_up(){
+    private heapify_up(){
         let index = this.length - 1;
         while(index > 0){
             let parentIndex = Math.floor((index - 1) / 2);
@@ -47,6 +50,25 @@ class Heap<T> implements HeapType<T>{
             this.swap(index, parentIndex)
             // 索引切换
             index = parentIndex
+        }
+    }
+    private heapify_down(start: number = 0){
+        let index = start;
+        while(2 * index + 1 <= this.length - 1){
+            let leftChildrenIndex = 2 * index + 1;
+            let rightChildrenIndex = 2 * index + 2; // 可能为空
+            // 3: 获取节点中较大的值
+            let largesIndex = leftChildrenIndex;
+            if(rightChildrenIndex < this.length && this.data[rightChildrenIndex] > this.data[leftChildrenIndex]){
+                largesIndex = rightChildrenIndex;
+            }
+            // 4: 比较较大的值和index比较
+            if(this.data[index] >= this.data[largesIndex]){
+                break;
+            }
+            //5: 交互位置
+            this.swap(index, largesIndex);
+            index = largesIndex;
         }
     }
 
@@ -69,44 +91,41 @@ class Heap<T> implements HeapType<T>{
         this.data[0] = minValue;
         this.length --;
         // 2: 获取左右子节点
-        let index = 0;
-        while(2 * index + 1 <= this.length - 1){
-            let leftChildrenIndex = 2 * index + 1;
-            let rightChildrenIndex = 2 * index + 2; // 可能为空
-            // 3: 获取节点中较大的值
-            let largesIndex = leftChildrenIndex;
-            if(rightChildrenIndex < this.length && this.data[rightChildrenIndex] > this.data[leftChildrenIndex]){
-                largesIndex = rightChildrenIndex;
-            }
-            // 4: 比较较大的值和index比较
-            if(this.data[index] >= this.data[largesIndex]){
-                return maxValue;
-            }
-            //5: 交互位置
-            this.swap(index, largesIndex);
-            index = largesIndex;
-        }
+        this.heapify_down()
         return maxValue;
     }
     peek(): T | undefined {
         return this.data[0];
     }
-    buildHeap(arr: T[]){
 
+    /**
+     * @description 数组 -> 堆数据
+     * 在原有数组上进行操作, 不占用额外空间
+     */
+    buildHeap(arr: T[]){
+        this.data = arr;
+        this.length = arr.length;
+
+        // 1: 从非叶子节点开始下滤操作
+        const start = Math.floor((this.length - 1) / 2);
+        for(let i = start; i >= 0; i--){
+            console.log(`🚀🚀🚀🚀🚀-> in index.ts on 109`,i)
+            this.heapify_down(i);
+        }
     }
 }
 
-const heap = new Heap<number>();
 const arr = [19,100,36,17,3,25,1,2,7]
-arr.forEach(item => {
-    heap.insert(item);
-})
+const heap = new Heap<number>(arr);
 
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
-heap.extract()
-heap.extract()
-heap.extract()
-heap.extract()
-console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
+// heap.buildHeap(arr)
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 119`,heap.data, arr)
+// arr.forEach(item => {
+//     heap.insert(item);
+// })
+//
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
+// heap.extract()
+// console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
 
 export default {}
