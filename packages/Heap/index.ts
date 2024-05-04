@@ -50,9 +50,43 @@ class Heap<T> implements HeapType<T>{
         }
     }
 
-
+    /**
+     * @description 删除
+     */
     extract(): T | undefined {
-        return undefined
+        // 如果元素只有一个或者0个
+        if(this.length === 0){
+            return undefined;
+        }
+        if(this.length === 1){
+            this.length --
+            return this.data.pop();
+        }
+
+        // 1: 提取需要返回的最大值
+        const maxValue = this.data[0];
+        const minValue = this.data.pop()!;
+        this.data[0] = minValue;
+        this.length --;
+        // 2: 获取左右子节点
+        let index = 0;
+        while(2 * index + 1 <= this.length - 1){
+            let leftChildrenIndex = 2 * index + 1;
+            let rightChildrenIndex = 2 * index + 2; // 可能为空
+            // 3: 获取节点中较大的值
+            let largesIndex = leftChildrenIndex;
+            if(rightChildrenIndex < this.length && this.data[rightChildrenIndex] > this.data[leftChildrenIndex]){
+                largesIndex = rightChildrenIndex;
+            }
+            // 4: 比较较大的值和index比较
+            if(this.data[index] >= this.data[largesIndex]){
+                return maxValue;
+            }
+            //5: 交互位置
+            this.swap(index, largesIndex);
+            index = largesIndex;
+        }
+        return maxValue;
     }
     peek(): T | undefined {
         return this.data[0];
@@ -63,9 +97,16 @@ class Heap<T> implements HeapType<T>{
 }
 
 const heap = new Heap<number>();
-const arr = [19,100,36,17,3,25,1,2,7,120]
+const arr = [19,100,36,17,3,25,1,2,7]
 arr.forEach(item => {
     heap.insert(item);
 })
+
 console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
+heap.extract()
+heap.extract()
+heap.extract()
+heap.extract()
+console.log(`🚀🚀🚀🚀🚀-> in index.ts on 66`,heap.data)
+
 export default {}
